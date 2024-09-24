@@ -16,6 +16,8 @@ const upgradeList = document.querySelector('#upgradelist');
 const msgbox = document.querySelector('#msgbox');
 const audioAchievement = document.querySelector('#swoosh');
 
+
+
 /* Följande variabler använder vi för att hålla reda på hur mycket pengar som
  * spelaren, har och tjänar.
  * last används för att hålla koll på tiden.
@@ -30,6 +32,12 @@ let acquiredUpgrades = 0;
 let last = 0;
 let numberOfClicks = 0; // hur många gånger har spelare eg. klickat
 let active = false; // exempel för att visa att du kan lägga till klass för att indikera att spelare får valuta
+let Metals = 0;
+let Crystals = 0;
+let Energy = 0;
+let tickSpeed = 100000;
+let robotHelpers = 0;
+let addRobotHelper = 1;
 
 // likt upgrades skapas här en array med objekt som innehåller olika former
 // av achievements.
@@ -57,7 +65,6 @@ let achievements = [
         acquired: false,
     },
 ];
-
 /* Med ett valt element, som knappen i detta fall så kan vi skapa listeners
  * med addEventListener så kan vi lyssna på ett specifikt event på ett html-element
  * som ett klick.
@@ -68,9 +75,32 @@ let achievements = [
  * money.
  * Läs mer: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
  */
+function getRandomMaterial (robotHelpers){ // Generate a random material
+    let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
+    // Get a random resource based on luck on each click.
+    if(randomGet < 80) {
+        Metals += 1 * (robotHelpers+1);
+        console.log(Metals + " Metals")
+        return Metals
+    } else if (randomGet > 80 &&  randomGet < 99){
+        Energy += 1 * (robotHelpers +1);
+        console.log(Energy + " Energy")
+        return Energy
+    } else {
+        Crystals +=1 * (robotHelpers+1);
+        console.log(Crystals + " Crystals")
+        return Crystals
+    }
+
+}
+
 clickerButton.addEventListener(
     'click',
     () => {
+        console.log(active)
+        console.log(robotHelpers)
+        getRandomMaterial(robotHelpers)
+
         // vid click öka score med moneyPerClick
         money += moneyPerClick;
         // håll koll på hur många gånger spelaren klickat
@@ -100,10 +130,16 @@ function step(timestamp) {
         last = timestamp;
     }
 
-    if (moneyPerSecond > 0 && !active) {
+    if (robotHelpers > 0 && !active) {
         mpsTracker.classList.add('active');
         active = true;
     }
+
+
+if (active == true) {
+    window.setInterval(getRandomMaterial(robotHelpers), 1000)
+}
+
 
     // achievements, utgår från arrayen achievements med objekt
     // koden nedan muterar (ändrar) arrayen och tar bort achievements
@@ -136,7 +172,7 @@ function step(timestamp) {
     window.requestAnimationFrame(step);
 }
 
-/* Här använder vi en listener igen. Den här gången så lyssnar iv efter window
+/* Här använder vi en listener igen. Den här gången så lyssnar vi efter window
  * objeket och när det har laddat färdigt webbsidan(omvandlat html till dom)
  * När detta har skett så skapar vi listan med upgrades, för detta använder vi
  * en forEach loop. För varje element i arrayen upgrades så körs metoden upgradeList
@@ -163,13 +199,17 @@ window.addEventListener('load', (event) => {
  */
 upgrades = [
     {
-        name: 'Sop',
-        cost: 10,
+        name: 'Robothelper',
+        metalCost: 10,
+        crystalCost: 0,
+        energyCost: 0,
         amount: 1,
+        addRobotHelper: 1,
     },
     {
         name: 'Kvalitetsspade',
         cost: 50,
+        
         clicks: 2,
     },
     {
@@ -208,21 +248,27 @@ function createCard(upgrade) {
     const header = document.createElement('p');
     header.classList.add('title');
     const cost = document.createElement('p');
+    const crystalCost = document.createElement('p');
+    const energyCost = document.createElement('p');
     if (upgrade.amount) {
         header.textContent = `${upgrade.name}, +${upgrade.amount} per sekund.`;
     } else {
         header.textContent = `${upgrade.name}, +${upgrade.clicks} per klick.`;
     }
-    cost.textContent = `Köp för ${upgrade.cost} benbitar.`;
+    cost.textContent = `Köp för ${upgrade.metalCost} Metal, ${upgrade.crystalCost} Crystals, ${upgrade.energyCost} Energy.`;
 
     card.addEventListener('click', (e) => {
-        if (money >= upgrade.cost) {
+        if (Metals >= upgrade.metalCost && Energy >= upgrade.energyCost && Crystals >= upgrade.crystalCost) {
             acquiredUpgrades++;
-            money -= upgrade.cost;
-            upgrade.cost *= 1.5;
-            cost.textContent = 'Köp för ' + upgrade.cost + ' benbitar';
-            moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
-            moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
+            Metals -= upgrade.metalCost;
+            Crystals -= upgrade.crystalCost;
+            Energy -= upgrade.energyCost;
+            robotHelpers += addRobotHelper;
+        
+            upgrade.metalCost *= 1.5;
+            cost.textContent = `Köp för ${upgrade.metalCost} Metal, ${upgrade.crys1talCost} Crystals, ${upgrade.energyCost} Energy.`;
+            
+            
             message('Grattis du har köpt en uppgradering!', 'success');
         } else {
             message('Du har inte råd.', 'warning');
