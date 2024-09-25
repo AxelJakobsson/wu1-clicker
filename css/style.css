@@ -141,7 +141,7 @@ audio {
     width: var(--space-4xl-5xl);
     height: var(--space-4xl-5xl);
     font-size: var(--step-2);
-    background: url('../img/brett-meliti-RgkYMfFopIA-unsplash-removebg-preview.png');
+    background: url('/img/png-transparent-red-and-blue-planet-lava-planet-planet-miscellaneous-purple-texture-removebg.png'); /* https://www.freepik.com/premium-psd/saturn-planet-concept-isolated-transparent-background_49809815.htm */
     background-size: cover;
     background-position: center;
     border: 2px solid transparent;

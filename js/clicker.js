@@ -9,6 +9,9 @@
  */
 const clickerButton = document.querySelector('#game-button');
 const moneyTracker = document.querySelector('#money');
+const metalTracker = document.querySelector('#Metals');
+const energyTracker = document.querySelector('#Energy');
+const crystalTracker = document.querySelector('#Crystals');
 const mpsTracker = document.querySelector('#mps'); // money per second
 const mpcTracker = document.querySelector('#mpc'); // money per click
 const upgradesTracker = document.querySelector('#upgrades');
@@ -76,39 +79,52 @@ let achievements = [
  * Läs mer: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
  */
 function getRandomMaterial (robotHelpers){ // Generate a random material
+    
     let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
     // Get a random resource based on luck on each click.
-    if(randomGet < 80) {
+    if(randomGet <= 80) { // 80% 
         Metals += 1 * (robotHelpers+1);
-        console.log(Metals + " Metals")
-        return Metals
-    } else if (randomGet > 80 &&  randomGet < 99){
+        metalTracker.textContent = Metals; // Update the values in the text
+        console.log(Metals + " Metals");
+        return Metals;
+    } else if (randomGet > 80 &&  randomGet < 99){ // 19% 
         Energy += 1 * (robotHelpers +1);
-        console.log(Energy + " Energy")
-        return Energy
-    } else {
+        energyTracker.textContent = Energy;
+        console.log(Energy + " Energy");
+        return Energy;
+    } else { // 1%
         Crystals +=1 * (robotHelpers+1);
-        console.log(Crystals + " Crystals")
-        return Crystals
+        crystalTracker.textContent = Crystals;
+        console.log(Crystals + " Crystals");
+        return Crystals;
     }
-
-}
+    
+};
 
 clickerButton.addEventListener(
     'click',
     () => {
         console.log(active)
         console.log(robotHelpers)
-        getRandomMaterial(robotHelpers)
+        getRandomMaterial(robotHelpers); // getRandomMaterial each click
 
         // vid click öka score med moneyPerClick
-        money += moneyPerClick;
+        // money += moneyPerClick;
         // håll koll på hur många gånger spelaren klickat
         numberOfClicks += 1;
         // console.log(clicker.score);
     },
     false
 );
+
+
+if (active == true) {
+    while (true) {
+        console.log("test");
+        getRandomMaterial(robotHelpers);
+        setTimeout(1000);
+    }
+};
 
 /* För att driva klicker spelet så kommer vi att använda oss av en metod som heter
  * requestAnimationFrame.
@@ -120,13 +136,14 @@ clickerButton.addEventListener(
  * Sist i funktionen så kallar den på sig själv igen för att fortsätta uppdatera.
  */
 function step(timestamp) {
-    moneyTracker.textContent = Math.round(money);
+// moneyTracker.textContent = Math.round(money);
     mpsTracker.textContent = moneyPerSecond;
     mpcTracker.textContent = moneyPerClick;
     upgradesTracker.textContent = acquiredUpgrades;
 
-    if (timestamp >= last + 1000) {
-        money += moneyPerSecond;
+
+    if (timestamp >= last + 100 && active) {
+        getRandomMaterial(robotHelpers);
         last = timestamp;
     }
 
@@ -135,10 +152,12 @@ function step(timestamp) {
         active = true;
     }
 
+    
 
-if (active == true) {
-    window.setInterval(getRandomMaterial(robotHelpers), 1000)
-}
+    
+    
+
+    
 
 
     // achievements, utgår från arrayen achievements med objekt
@@ -172,6 +191,7 @@ if (active == true) {
     window.requestAnimationFrame(step);
 }
 
+
 /* Här använder vi en listener igen. Den här gången så lyssnar vi efter window
  * objeket och när det har laddat färdigt webbsidan(omvandlat html till dom)
  * När detta har skett så skapar vi listan med upgrades, för detta använder vi
@@ -199,18 +219,18 @@ window.addEventListener('load', (event) => {
  */
 upgrades = [
     {
-        name: 'Robothelper',
+        name: 'Robothelper', // Generates materials
         metalCost: 10,
         crystalCost: 0,
         energyCost: 0,
         amount: 1,
         addRobotHelper: 1,
+        
     },
     {
-        name: 'Kvalitetsspade',
+        name: 'Factory', // Generates robot helpers
         cost: 50,
-        
-        clicks: 2,
+        amount: 1,
     },
     {
         name: 'Skottkärra',

@@ -6,3 +6,6 @@ Med materialen kan man anställa robotar som samlar in material åt dig, robotfa
 Olika planeter, kanske 
 
 
+Lagt till robothjälpare som genererar material
+Ska lägga till ett factory som producerar robothjälpare fast den ger inte ett "manual" purchases. 
+Ska lägga till manual purchases som ger en x2 multiplier till hela den sakens produktion då man köper en manuell.
