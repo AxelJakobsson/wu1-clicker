@@ -38,9 +38,14 @@ let active = false; // exempel för att visa att du kan lägga till klass för a
 let Metals = 0;
 let Crystals = 0;
 let Energy = 0;
-let tickSpeed = 100000;
+let tickSpeed = 1000;
+
 let robotHelpers = 0;
 let addRobotHelper = 1;
+
+let factories = 0;
+let addFactories = 1;
+let produceHelpers = 0;
 
 // likt upgrades skapas här en array med objekt som innehåller olika former
 // av achievements.
@@ -84,22 +89,23 @@ function getRandomMaterial (robotHelpers){ // Generate a random material
     // Get a random resource based on luck on each click.
     if(randomGet <= 80) { // 80% 
         Metals += 1 * (robotHelpers+1);
-        metalTracker.textContent = Metals; // Update the values in the text
+        metalTracker.textContent = Math.round(Metals); // Update the values in the text
         console.log(Metals + " Metals");
         return Metals;
     } else if (randomGet > 80 &&  randomGet < 99){ // 19% 
         Energy += 1 * (robotHelpers +1);
-        energyTracker.textContent = Energy;
+        energyTracker.textContent = Math.round(Energy);// Update the values in the text
         console.log(Energy + " Energy");
         return Energy;
     } else { // 1%
         Crystals +=1 * (robotHelpers+1);
-        crystalTracker.textContent = Crystals;
+        crystalTracker.textContent = Math.round(Crystals);// Update the values in the text
         console.log(Crystals + " Crystals");
         return Crystals;
     }
-    
 };
+
+
 
 clickerButton.addEventListener(
     'click',
@@ -118,13 +124,8 @@ clickerButton.addEventListener(
 );
 
 
-if (active == true) {
-    while (true) {
-        console.log("test");
-        getRandomMaterial(robotHelpers);
-        setTimeout(1000);
-    }
-};
+
+
 
 /* För att driva klicker spelet så kommer vi att använda oss av en metod som heter
  * requestAnimationFrame.
@@ -142,22 +143,19 @@ function step(timestamp) {
     upgradesTracker.textContent = acquiredUpgrades;
 
 
-    if (timestamp >= last + 100 && active) {
+    if (timestamp >= last + tickSpeed && active) {
         getRandomMaterial(robotHelpers);
         last = timestamp;
+        if (factories > 0) {
+            robotHelpers += produceHelpers
+            console.log(`Factories produced ${produceHelpers} robot helpers`)
+        }
     }
 
     if (robotHelpers > 0 && !active) {
         mpsTracker.classList.add('active');
         active = true;
     }
-
-    
-
-    
-    
-
-    
 
 
     // achievements, utgår från arrayen achievements med objekt
@@ -193,7 +191,7 @@ function step(timestamp) {
 
 
 /* Här använder vi en listener igen. Den här gången så lyssnar vi efter window
- * objeket och när det har laddat färdigt webbsidan(omvandlat html till dom)
+ * objektet och när det har laddat färdigt webbsidan(omvandlat html till dom)
  * När detta har skett så skapar vi listan med upgrades, för detta använder vi
  * en forEach loop. För varje element i arrayen upgrades så körs metoden upgradeList
  * för att skapa korten. upgradeList returnerar ett kort som vi fäster på webbsidan
@@ -225,12 +223,15 @@ upgrades = [
         energyCost: 0,
         amount: 1,
         addRobotHelper: 1,
-        
+        manualPurchase: 1,
     },
     {
         name: 'Factory', // Generates robot helpers
-        cost: 50,
+        metalCost: 10,
+        crystalCost: 0,
+        energyCost: 0,
         amount: 1,
+        manualPurchase: 1,
     },
     {
         name: 'Skottkärra',
@@ -283,10 +284,20 @@ function createCard(upgrade) {
             Metals -= upgrade.metalCost;
             Crystals -= upgrade.crystalCost;
             Energy -= upgrade.energyCost;
-            robotHelpers += addRobotHelper;
-        
-            upgrade.metalCost *= 1.5;
-            cost.textContent = `Köp för ${upgrade.metalCost} Metal, ${upgrade.crys1talCost} Crystals, ${upgrade.energyCost} Energy.`;
+
+            if (upgrade.name == 'Robothelper') {
+                robotHelpers += addRobotHelper;
+                upgrade.metalCost *= 1.5;
+            }
+
+            else if (upgrade.name == 'Factory') {
+                factories += addFactories;
+                upgrade.metalCost *= 1.5;
+
+                produceHelpers = 1 * factories
+            }
+
+            cost.textContent = `Köp för ${Math.round(upgrade.metalCost)} Metal, ${Math.round(upgrade.crys1talCost)} Crystals, ${Math.round(upgrade.energyCost)} Energy.`;
             
             
             message('Grattis du har köpt en uppgradering!', 'success');
