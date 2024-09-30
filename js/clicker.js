@@ -18,6 +18,8 @@ const upgradesTracker = document.querySelector('#upgrades');
 const upgradeList = document.querySelector('#upgradelist');
 const msgbox = document.querySelector('#msgbox');
 const audioAchievement = document.querySelector('#swoosh');
+const helperTracker = document.querySelector('#helpers')
+const tickspeedTracker = document.querySelector('#tickspeed')
 
 
 
@@ -35,9 +37,11 @@ let acquiredUpgrades = 0;
 let last = 0;
 let numberOfClicks = 0; // hur många gånger har spelare eg. klickat
 let active = false; // exempel för att visa att du kan lägga till klass för att indikera att spelare får valuta
+
+// Resources
 let Metals = 0;
-let Crystals = 0;
 let Energy = 0;
+let Crystals = 0;
 let tickSpeed = 1000;
 
 let robotHelpers = 0;
@@ -46,6 +50,14 @@ let addRobotHelper = 1;
 let factories = 0;
 let addFactories = 1;
 let produceHelpers = 0;
+
+let industrialGenerators = 0;
+let addIndustrialGenerators = 1;
+let produceFactories = 0;
+
+let metalLoop = 0;
+let energyLoop = 0;
+let crystalLoop = 0;
 
 // likt upgrades skapas här en array med objekt som innehåller olika former
 // av achievements.
@@ -84,25 +96,49 @@ let achievements = [
  * Läs mer: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
  */
 function getRandomMaterial (robotHelpers){ // Generate a random material
+   
+        
+        for (let i = 0; i < robotHelpers; i++) {
+            let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
+            Math.floor(Math.random() * 100) + 1;
+            if (randomGet <= 80) {
+                Metals += 1 * (robotHelpers);
+                metalTracker.textContent = Math.round(Metals); // Update the values in the text
+                metalLoop++;
+                console.log(metalLoop + ' Metals')
+            } else if (randomGet > 80 && randomGet < 99){
+                energyLoop++;
+                Energy += 1 * (robotHelpers);
+                energyTracker.textContent = Math.round(Energy);// Update the values in the text
+                console.log(energyLoop + ' Energy')
+            } else {
+                crystalLoop++;
+                Crystals +=1 * (robotHelpers);
+                crystalTracker.textContent = Math.round(Crystals);// Update the values in the text
+                console.log(crystalLoop + ' Crystals')
+            }
+        }
+        /*
+        let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
+        
+        // Get a random resource based on luck on each click.
+        if(randomGet <= 80) { // 80% 
+            Metals += 1 * (robotHelpers);
+            metalTracker.textContent = Math.round(Metals); // Update the values in the text
+           // console.log(Metals + " Metals");
+            
+        } else if (randomGet > 80 &&  randomGet < 99){ // 19% 
+            Energy += 1 * (robotHelpers);
+            energyTracker.textContent = Math.round(Energy);// Update the values in the text
+            //console.log(Energy + " Energy");
+            
+        } else { // 1%
+            Crystals +=1 * (robotHelpers);
+            crystalTracker.textContent = Math.round(Crystals);// Update the values in the text
+            //console.log(Crystals + " Crystals");
     
-    let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
-    // Get a random resource based on luck on each click.
-    if(randomGet <= 80) { // 80% 
-        Metals += 1 * (robotHelpers+1);
-        metalTracker.textContent = Math.round(Metals); // Update the values in the text
-        console.log(Metals + " Metals");
-        return Metals;
-    } else if (randomGet > 80 &&  randomGet < 99){ // 19% 
-        Energy += 1 * (robotHelpers +1);
-        energyTracker.textContent = Math.round(Energy);// Update the values in the text
-        console.log(Energy + " Energy");
-        return Energy;
-    } else { // 1%
-        Crystals +=1 * (robotHelpers+1);
-        crystalTracker.textContent = Math.round(Crystals);// Update the values in the text
-        console.log(Crystals + " Crystals");
-        return Crystals;
-    }
+        }    
+            */
 };
 
 
@@ -112,13 +148,32 @@ clickerButton.addEventListener(
     () => {
         console.log(active)
         console.log(robotHelpers)
-        getRandomMaterial(robotHelpers); // getRandomMaterial each click
+        numberOfClicks += 1;
+        // console.log(clicker.score);
+        //getRandomMaterial(robotHelpers); // getRandomMaterial each click
+
+    let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
+        // Get a random resource based on luck on each click.
+        if(randomGet <= 80) { // 80% 
+            Metals += 1;
+            metalTracker.textContent = Math.round(Metals); // Update the values in the text
+            //console.log(Metals + " Metals");
+            return Metals;
+        } else if (randomGet > 80 &&  randomGet < 99){ // 19% 
+            Energy += 1;
+            energyTracker.textContent = Math.round(Energy);// Update the values in the text
+            //console.log(Energy + " Energy");
+            return Energy;
+        } else { // 1%
+            Crystals +=1;
+            crystalTracker.textContent = Math.round(Crystals);// Update the values in the text
+           // console.log(Crystals + " Crystals");
+            return Crystals;
+    }
 
         // vid click öka score med moneyPerClick
         // money += moneyPerClick;
         // håll koll på hur många gånger spelaren klickat
-        numberOfClicks += 1;
-        // console.log(clicker.score);
     },
     false
 );
@@ -138,22 +193,38 @@ clickerButton.addEventListener(
  */
 function step(timestamp) {
 // moneyTracker.textContent = Math.round(money);
-    mpsTracker.textContent = moneyPerSecond;
-    mpcTracker.textContent = moneyPerClick;
+//    mpsTracker.textContent = moneyPerSecond;
+//    mpcTracker.textContent = moneyPerClick;
     upgradesTracker.textContent = acquiredUpgrades;
+    helperTracker.textContent = robotHelpers; // Uppdatera robothelper texten
+    tickspeedTracker.textContent = tickSpeed + 'ms'; // Uppdatera tickspeed texten
+
+    metalTracker.textContent = Metals;
+    energyTracker.textContent = Energy;
+    crystalTracker.textContent = Crystals;
+
+
+    produceFactories = 1 * industrialGenerators;
+    produceHelpers = 1 * factories;
+    
 
 
     if (timestamp >= last + tickSpeed && active) {
         getRandomMaterial(robotHelpers);
         last = timestamp;
+        
         if (factories > 0) {
             robotHelpers += produceHelpers
-            console.log(`Factories produced ${produceHelpers} robot helpers`)
+            //console.log(`Factories produced ${produceHelpers} robot helpers`)
+        }
+        if (industrialGenerators > 0) {
+            factories += produceFactories;
+            //console.log(`Industral generators produced ${produceFactories} factories`)
         }
     }
 
     if (robotHelpers > 0 && !active) {
-        mpsTracker.classList.add('active');
+        metalTracker.classList.add('active');
         active = true;
     }
 
@@ -217,10 +288,17 @@ window.addEventListener('load', (event) => {
  */
 upgrades = [
     {
+        name: 'Tickspeed', // Decreases tickspeed (stuff goes faster)
+        metalCost: 10,
+        energyCost: 5,
+        crystalCost: 1,
+    },
+
+    {
         name: 'Robothelper', // Generates materials
         metalCost: 10,
-        crystalCost: 0,
         energyCost: 0,
+        crystalCost: 0,
         amount: 1,
         addRobotHelper: 1,
         manualPurchase: 1,
@@ -228,15 +306,18 @@ upgrades = [
     {
         name: 'Factory', // Generates robot helpers
         metalCost: 10,
-        crystalCost: 0,
         energyCost: 0,
-        amount: 1,
-        manualPurchase: 1,
+        crystalCost: 0,
+        amount: 1, // Amount that increases
+        manualPurchase: 1, // Gives a manual purchase
     },
     {
-        name: 'Skottkärra',
-        cost: 100,
-        amount: 10,
+        name: 'Industrial Generator',
+        metalCost: 10,
+        energyCost: 0,
+        crystalCost: 0,
+        amount: 1,
+        manualPurchase: 1,
     },
     {
         name: 'Grävmaskin',
@@ -272,20 +353,25 @@ function createCard(upgrade) {
     const crystalCost = document.createElement('p');
     const energyCost = document.createElement('p');
     if (upgrade.amount) {
-        header.textContent = `${upgrade.name}, +${upgrade.amount} per sekund.`;
+        header.textContent = `${upgrade.name}`;
     } else {
-        header.textContent = `${upgrade.name}, +${upgrade.clicks} per klick.`;
+        header.textContent = `${upgrade.name}`;
     }
-    cost.textContent = `Köp för ${upgrade.metalCost} Metal, ${upgrade.crystalCost} Crystals, ${upgrade.energyCost} Energy.`;
+    cost.textContent = `Köp för ${upgrade.metalCost} Metal, ${upgrade.energyCost} Energy, ${upgrade.crystalCost} Crystals.`;
 
     card.addEventListener('click', (e) => {
         if (Metals >= upgrade.metalCost && Energy >= upgrade.energyCost && Crystals >= upgrade.crystalCost) {
             acquiredUpgrades++;
             Metals -= upgrade.metalCost;
-            Crystals -= upgrade.crystalCost;
             Energy -= upgrade.energyCost;
+            Crystals -= upgrade.crystalCost;
+            
 
-            if (upgrade.name == 'Robothelper') {
+            if (upgrade.name == 'Tickspeed') {
+                tickSpeed *= 0.9;
+            }
+
+            else if (upgrade.name == 'Robothelper') {
                 robotHelpers += addRobotHelper;
                 upgrade.metalCost *= 1.5;
             }
@@ -293,11 +379,16 @@ function createCard(upgrade) {
             else if (upgrade.name == 'Factory') {
                 factories += addFactories;
                 upgrade.metalCost *= 1.5;
-
-                produceHelpers = 1 * factories
+                
             }
 
-            cost.textContent = `Köp för ${Math.round(upgrade.metalCost)} Metal, ${Math.round(upgrade.crys1talCost)} Crystals, ${Math.round(upgrade.energyCost)} Energy.`;
+            else if (upgrade.name == 'Industrial Generator') {
+                industrialGenerators += addIndustrialGenerators;
+                upgrade.metalCost *= 1.5;
+                
+            }
+
+            cost.textContent = `Köp för ${Math.round(upgrade.metalCost)} Metal, ${Math.round(upgrade.energyCost)} Energy, ${Math.round(upgrade.crystalCost)} Crystals.`;
             
             
             message('Grattis du har köpt en uppgradering!', 'success');

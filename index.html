@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Rymdkolonisering - Clicker exempel</title>
+    <script src='js/bignumber.js'></script>
 </head>
 
 <body>
@@ -36,6 +37,9 @@
             <div class="game-hud">
                 <ul class="game-currency">
                     <li class="item">
+                        <h3>Tickspeed: <span id="tickspeed"></span></h3>
+                    </li>
+                    <li class="item">
                         <h3>Metal: <span id="Metals"></span></h3>
                     </li>
                     <li class="item">
@@ -44,14 +48,18 @@
                     <li class="item">
                         <h3>Crystals: <span id="Crystals"></span></h3>
                     </li>
-                    <li class="item">
+                    <!-- <li class="item"> 
                         <h3>Benbitar per klick: <span id="mpc"></span></h3>
                     </li>
                     <li class="item">
                         <h3>Benbitar per sekund: <span id="mps"></span></h3>
-                    </li>
+                    </li>-->
                     <li class="item">
                         <h3>Uppgraderingar: <span id="upgrades"></span></h3>
+                    </li>
+                    
+                    <li class="item">
+                        <h3>Robothelpers: <span id="helpers"></span></h3>
                     </li>
                 </ul>
                 <div class="game-controls">
@@ -98,7 +106,9 @@
             </ul>
         </div>
     </footer>
+    
     <script src="js/clicker.js"></script>
+
 </body>
 
 </html>
