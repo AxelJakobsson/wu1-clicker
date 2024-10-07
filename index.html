@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Rymdkolonisering - Clicker exempel</title>
-    <script src='js/bignumber.js'></script>
 </head>
 
 <body>
     <audio id="swoosh" src="audio/607251__d4xx__swoosh-2.wav"></audio>
     <header class="hero">
+        <p id="resourcesDisplay"></p>
         <picture>
             <source srcset="img/leandra-rieger-wk966Ouqces-unsplash.jpg"> <!-- Leandra_rieger-->
             <source srcset="img/ashleigh-joy-photography-uyRku9KF2N8-unsplash-resize-s.jpg">
@@ -22,14 +22,10 @@
             <source srcset="img/ashleigh-joy-photography-uyRku9KF2N8-unsplash-resize-s.webp">
             <img src="img/leandra-rieger-wk966Ouqces-unsplash.jpg" alt="">
         </picture>
+        
         <div class="hero-gradient"></div>
         <div class="container hero-content">
-            <h1>Rymdkolonisering</h1>
-            <div class="lead">
-                <p>Med entusiasm och bara händer ger du dig ut i jakten på fossil till ditt museum.</p>
-                <p>Värva hjälpredor och gräv dig till nya upptäckter.</p>
-                <p>Hur många besökare kan du få?</p>
-            </div>
+            <button id="game-button" onclick="displayResources()">Klicka</button>
         </div>
     </header>
     <main class="container">
@@ -48,19 +44,22 @@
                     <li class="item">
                         <h3>Crystals: <span id="Crystals"></span></h3>
                     </li>
-                    <!-- <li class="item"> 
-                        <h3>Benbitar per klick: <span id="mpc"></span></h3>
-                    </li>
-                    <li class="item">
-                        <h3>Benbitar per sekund: <span id="mps"></span></h3>
-                    </li>-->
                     <li class="item">
                         <h3>Uppgraderingar: <span id="upgrades"></span></h3>
                     </li>
                     
-                    <li class="item">
+                    <!-- <li class="item">
                         <h3>Robothelpers: <span id="helpers"></span></h3>
                     </li>
+                    <li class="item">
+                        <h3>Factory: <span id="factories"></span></h3>
+                    </li>
+                    <li class="item">
+                        <h3>Industral Generators: <span id="industrialGenerators"></span></h3>
+                    </li>
+                    <li class="item">
+                        <h3>Assembly Plant: <span id="assemblyPlants"></span></h3>
+                    </li> -->
                 </ul>
                 <div class="game-controls">
                     <button id="game-button">Gräv</button>

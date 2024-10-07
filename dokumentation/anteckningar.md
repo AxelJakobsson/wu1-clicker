@@ -16,5 +16,12 @@ Har lagt till factory
 
 
 
+10/7
 Ska lägga till manual purchases som ger en x2 multiplier till hela den sakens produktion då man köper en manuell.
+Ska lägga till en sida där man kan se alla achievement requirements osv. 
+
+Försökt lägga till resource pop ups när man klickar knapp
+Bytt ut knappen till månen på hero
+Lagt till amount på uppgraderingarna så man ser hur många man har 
+Tog bort tickspeed uppgraderingen och lade till det till achievementsen så att man har ett incentive att gå för dem.
 
