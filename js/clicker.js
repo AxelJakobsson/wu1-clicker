@@ -8,7 +8,11 @@
  * Viktigt: queryselector ger oss ett html element eller flera om det finns.
  */
 const clickerButton = document.querySelector('#game-button');
-const display = document.querySelector('#resourcesDisplay')
+const display = document.querySelector('#resourcesDisplay');
+const menuButton = document.querySelector('#menuButton');
+const menuCloseButton = document.querySelector('#menuCloseButton');
+const menu = document.querySelector('.menu')
+
 
 const moneyTracker = document.querySelector('#money');
 const metalTracker = document.querySelector('#Metals');
@@ -18,6 +22,7 @@ const mpsTracker = document.querySelector('#mps'); // money per second
 const mpcTracker = document.querySelector('#mpc'); // money per click
 const upgradesTracker = document.querySelector('#upgrades');
 const upgradeList = document.querySelector('#upgradelist');
+const achievementList = document.querySelector('#achievementList');
 const msgbox = document.querySelector('#msgbox');
 const audioAchievement = document.querySelector('#swoosh');
 const tickspeedTracker = document.querySelector('#tickspeed');
@@ -75,6 +80,13 @@ let metalLoop = 0;
 let energyLoop = 0;
 let crystalLoop = 0;
 
+let formattedMetals = bigNumberHandler(Metals);
+let formattedEnergy = bigNumberHandler(Energy);
+let formattedCrystals = bigNumberHandler(Crystals);
+let formattedRobotHelpers = bigNumberHandler(robotHelpers);
+let formattedFactories = bigNumberHandler(factories);
+let formattedIndustraialGenerators = bigNumberHandler(industrialGenerators);
+let formattedAssemblyPlants = bigNumberHandler(assemblyPlants);
 // likt upgrades skapas här en array med objekt som innehåller olika former
 // av achievements.
 // requiredSOMETHING är vad som krävs för att få dem
@@ -171,13 +183,85 @@ function randomPosition() {
     return y;
 }
 
+function bigNumberHandler(count) {
+    var str = count.toString();
+    var tmpCount = '';
+    if (count < 1000000) {
+        tmpCount = "";
+    } else if (count >= 10000 && count <= 1000000) { 
+        str = "K";
+        tmpCount = (count / 10000).toFixed(2);
+    } else if (count >= 1000000 && count <= 1000000000) {
+        str = "M";
+        tmpCount = (count / 1000000).toFixed(2);
+    } else if (count >= 1000000000 && count <= 1000000000000) {
+        str = "B";
+        tmpCount = (count / 1000000000).toFixed(2);
+    } else if (count >= 1000000000000 && count <= 1000000000000000) {
+        str = "T";
+        tmpCount = (count / 1000000000000).toFixed(2);
+    } else if (count >= 1000000000000000 && count <= 1000000000000000000) {
+        str = "Quadrillion";
+        tmpCount = (count / 1000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000 && count <= 1000000000000000000000) {
+        str = "Quintillion";
+        tmpCount = (count / 1000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000 && count <= 1000000000000000000000000) {
+        str = "Sextillion";
+        tmpCount = (count / 1000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000 && count <= 1000000000000000000000000000) {
+        str = "Septillion";
+        tmpCount = (count / 1000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000 && count <= 1000000000000000000000000000000) {
+        str = "Octillion";
+        tmpCount = (count / 1000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000 && count <= 1000000000000000000000000000000000) {
+        str = "Nonillion";
+        tmpCount = (count / 1000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000) {
+        str = "Decillion";
+        tmpCount = (count / 1000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000) {
+        str = "Undecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000) {
+        str = "Duodecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000) {
+        str = "Tredecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000000) {
+        str = "Quattuordecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000000000) {
+        str = "Quindecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000000000000) {
+        str = "Sexdecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000000000000000) {
+        str = "Septendecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000000000000000000) {
+        str = "Octodecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000000000000000000 && count <= 1000000000000000000000000000000000000000000000000000000000000000) {
+        str = "Novemdecillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 1000000000000000000000000000000000000000000000000000000000000000 && count <= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000) {
+        str = "Vigintillion";
+        tmpCount = (count / 1000000000000000000000000000000000000000000000000000000000000000).toFixed(2);
+    } else if (count >= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 && count) {
+        str = "Googol";
+        tmpCount = (count / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000).toFixed(2);
+    }
+}
+
 clickerButton.addEventListener(
     'click',
     () => {
         numberOfClicks += 1;
-        metalTracker.textContent = Math.round(Metals);
-        energyTracker.textContent = Math.round(Energy);
-        crystalTracker.textContent = Math.round(Crystals);
+        
 
         // console.log(clicker.score);
         //getRandomMaterial(robotHelpers); // getRandomMaterial each click
@@ -186,19 +270,22 @@ clickerButton.addEventListener(
         // Get a random resource based on luck on each click.
         if (randomGet <= 80) { // 80% 
             Metals += 1;
-            metalTracker.textContent = Math.round(Metals); // Update the values in the text
+            formattedMetals = bigNumberHandler(Metals);
+            metalTracker.textContent = formattedMetals; // Update the values in the text
             displayResources('Metal')
             //console.log(Metals + " Metals");
             return Metals;
         } else if (randomGet > 80 && randomGet < 99) { // 19% 
             Energy += 1;
-            energyTracker.textContent = Math.round(Energy);// Update the values in the text
+            formattedEnergy = bigNumberHandler(Energy);
+            energyTracker.textContent = formattedEnergy;// Update the values in the text
             displayResources('Energy')
             //console.log(Energy + " Energy");
             return Energy;
         } else { // 1%
             Crystals += 1;
-            crystalTracker.textContent = Math.round(Crystals);// Update the values in the text
+            formattedCrystals = bigNumberHandler(Crystals);
+            crystalTracker.textContent = formattedCrystals;// Update the values in the text
             displayResources('Crystal')
             // console.log(Crystals + " Crystals");
             return Crystals;
@@ -207,10 +294,22 @@ clickerButton.addEventListener(
         // vid click öka score med moneyPerClick
         // money += moneyPerClick;
         // håll koll på hur många gånger spelaren klickat
+        
     },
-    false
+    false,
 );
 
+
+menuButton.onclick = function () {
+    menu.classList.toggle("show")
+
+    achievements.forEach((achievement) => {
+        achievementList.appendChild(createCard(achievement));
+    });
+
+
+    console.log("test")
+}
 
 
 
@@ -224,14 +323,15 @@ clickerButton.addEventListener(
  * denna metod som uppdaterar webbsidans text och pengarna.
  * Sist i funktionen så kallar den på sig själv igen för att fortsätta uppdatera.
  */
+function updateResources() {
+    metalTracker.textContent = bigNumberHandler(Metals);
+    energyTracker.textContent = bigNumberHandler(Energy);
+    crystalTracker.textContent = bigNumberHandler(Crystals);
+}
+
+
 function step(timestamp) {
-    // moneyTracker.textContent = Math.round(money);
-    //    mpsTracker.textContent = moneyPerSecond;
-    //    mpcTracker.textContent = moneyPerClick;
     upgradesTracker.textContent = acquiredUpgrades;
-
-
-
 
 
     produceHelpers = 1 * factories;
@@ -243,10 +343,8 @@ function step(timestamp) {
     if (timestamp >= last + tickSpeed) {
         getRandomMaterial(robotHelpers);
 
-        metalTracker.textContent = Math.round(Metals);
-        energyTracker.textContent = Math.round(Energy);
-        crystalTracker.textContent = Math.round(Crystals);
-        
+        updateResources();
+
         tickspeedTracker.textContent = tickSpeed + 'ms'; // Uppdatera tickspeed texten
         // helperTracker.textContent = robotHelpers; // Uppdatera robothelper texten
         // assemblyPlantTracker.textContent = assemblyPlants;
@@ -269,6 +367,8 @@ function step(timestamp) {
         if (assemblyPlants > 0) {
             industrialGenerators += produceIndustralGenerators;
         }
+
+        updateResources();
     }
 
     if (robotHelpers > 2 && !activeMetal) {
@@ -337,6 +437,7 @@ window.addEventListener('load', (event) => {
     window.requestAnimationFrame(step);
 });
 
+
 /* En array med upgrades. Varje upgrade är ett objekt med egenskaperna name, cost
  * och amount. Önskar du ytterligare text eller en bild så går det utmärkt att
  * lägga till detta.
@@ -355,25 +456,25 @@ upgrades = [
     },
     {
         name: 'Factory', // Generates robot helpers
-        metalCost: 10,
-        energyCost: 0,
+        metalCost: 100,
+        energyCost: 10,
         crystalCost: 0,
         amount: 1, // Amount that increases
         manualPurchase: 1, // Gives a manual purchase
     },
     {
         name: 'Industrial Generator',
-        metalCost: 10,
-        energyCost: 0,
+        metalCost: 1000,
+        energyCost: 100,
         crystalCost: 0,
         amount: 1,
         manualPurchase: 1,
     },
     {
         name: 'Assembly Plant',
-        metalCost: 10,
-        energyCost: 0,
-        crystalCost: 0,
+        metalCost: 10000,
+        energyCost: 1000,
+        crystalCost: 100,
         amount: 0,
         manualPurchase: 0,
     },
@@ -400,7 +501,20 @@ upgrades = [
 function getWhiteSpace(count) {
     return '\xa0'.repeat(count);
 }
+function createCard(achievements) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    const header = document.createElement('p');
+    header.classList.add('title');
+    const description = document.createElement('p');
+    const requiredUpgrades = document.createElement('p');
+    const requiredClicks = document.createElement('p');
+    const acquired = document.createElement('p');
 
+    setInterval(function () {
+        header.textContent = `${achievements.description} ${achievements.requiredClicks} ${achievements.requiredUpgrades}`
+    })
+}
 
 function createCard(upgrade) {
     const card = document.createElement('div');
@@ -410,7 +524,7 @@ function createCard(upgrade) {
     const cost = document.createElement('p');
     const crystalCost = document.createElement('p');
     const energyCost = document.createElement('p');
-    setInterval (function() {
+    setInterval(function () {
         if (upgrade.name == 'Robothelper') {
             header.textContent = `${upgrade.name} ${getWhiteSpace(38)} Amount: ${robotHelpers}`;
         }
@@ -424,8 +538,8 @@ function createCard(upgrade) {
             header.textContent = `${upgrade.name} ${getWhiteSpace(32)} Amount: ${assemblyPlants}`;
         }
     });
-    
-   
+
+
     cost.textContent = `Köp för ${upgrade.metalCost} Metal, ${upgrade.energyCost} Energy, ${upgrade.crystalCost} Crystals.`;
 
     card.addEventListener('click', (e) => {
@@ -442,25 +556,31 @@ function createCard(upgrade) {
 
             else if (upgrade.name == 'Robothelper') {
                 robotHelpers += addRobotHelper;
-                upgrade.metalCost *= 1.5;
+                upgrade.metalCost *= 10;
             }
 
             else if (upgrade.name == 'Factory') {
                 factories += addFactories;
-                upgrade.metalCost *= 1.5;
+                upgrade.metalCost *= 100;
+                upgrade.energyCost *= 10;
             }
 
             else if (upgrade.name == 'Industrial Generator') {
                 industrialGenerators += addIndustrialGenerators;
-                upgrade.metalCost *= 1.5;
+                upgrade.metalCost *= 1000;
+                upgrade.energyCost *= 100;
+
             }
 
             else if (upgrade.name == 'Assembly Plant') {
                 assemblyPlants += addAssemblyPlants;
-                upgrade.metalCost *= 1.5;
+                upgrade.metalCost *= 10000;
+                upgrade.energyCost *= 1000;
+                upgrade.crystalCost *= 100;
             }
-
-            cost.textContent = `Köp för ${Math.round(upgrade.metalCost)} Metal, ${Math.round(upgrade.energyCost)} Energy, ${Math.round(upgrade.crystalCost)} Crystals.`;
+            
+            formattedMetalCost = bigNumberHandler(metalCost)
+            cost.textContent = `Köp för ${Math.round(upgrade.formattedMetalCost)} Metal, ${Math.round(upgrade.energyCost)} Energy, ${Math.round(upgrade.crystalCost)} Crystals.`;
 
 
             message('Grattis du har köpt en uppgradering!', 'success');

@@ -252,3 +252,30 @@ audio {
 .active {
     animation: flash 1s infinite;
 }
+
+
+
+
+
+.menu {
+    display: none;
+    background-color: black;
+    width: 100vw;
+    height: 90vh;
+    opacity: 60%;
+
+    position: fixed;
+    bottom: 0;
+    
+}
+
+.show {
+    display: block;
+}
+
+#menuButton {
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+}
+

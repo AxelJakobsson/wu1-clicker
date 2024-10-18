@@ -25,3 +25,6 @@ Bytt ut knappen till månen på hero
 Lagt till amount på uppgraderingarna så man ser hur många man har 
 Tog bort tickspeed uppgraderingen och lade till det till achievementsen så att man har ett incentive att gå för dem.
 
+10/14 
+Har lagt till en bigNumberHandler som gör det enklare att se hur mycket pengar och sådant man har
+Lagt till en achievement lista så man kan se alla achievements
