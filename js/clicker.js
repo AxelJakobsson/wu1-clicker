@@ -9,9 +9,10 @@
  */
 const clickerButton = document.querySelector('#game-button');
 const display = document.querySelector('#resourcesDisplay');
-const menuButton = document.querySelector('#menuButton');
 const menuCloseButton = document.querySelector('#menuCloseButton');
 const menu = document.querySelector('.menu')
+const achievementsMenu = document.getElementById('achievementsMenu');
+const menuButton = document.getElementById('menuButton');
 
 
 const moneyTracker = document.querySelector('#money');
@@ -255,6 +256,8 @@ function bigNumberHandler(count) {
         str = "Googol";
         tmpCount = (count / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000).toFixed(2);
     }
+
+    return `${tmpCount} ${str}`.trim();
 }
 
 clickerButton.addEventListener(
@@ -270,26 +273,16 @@ clickerButton.addEventListener(
         // Get a random resource based on luck on each click.
         if (randomGet <= 80) { // 80% 
             Metals += 1;
-            formattedMetals = bigNumberHandler(Metals);
-            metalTracker.textContent = formattedMetals; // Update the values in the text
             displayResources('Metal')
-            //console.log(Metals + " Metals");
-            return Metals;
         } else if (randomGet > 80 && randomGet < 99) { // 19% 
             Energy += 1;
-            formattedEnergy = bigNumberHandler(Energy);
-            energyTracker.textContent = formattedEnergy;// Update the values in the text
             displayResources('Energy')
-            //console.log(Energy + " Energy");
-            return Energy;
         } else { // 1%
             Crystals += 1;
-            formattedCrystals = bigNumberHandler(Crystals);
-            crystalTracker.textContent = formattedCrystals;// Update the values in the text
             displayResources('Crystal')
             // console.log(Crystals + " Crystals");
-            return Crystals;
         }
+        updateResources(); // Uppdatera achievements
 
         // vid click öka score med moneyPerClick
         // money += moneyPerClick;
@@ -300,17 +293,15 @@ clickerButton.addEventListener(
 );
 
 
-menuButton.onclick = function () {
-    menu.classList.toggle("show")
-
-    achievements.forEach((achievement) => {
-        achievementList.appendChild(createCard(achievement));
-    });
-
-
-    console.log("test")
-}
-
+// Visa menyn när man klickar på knappen
+menuButton.addEventListener('click', () => {
+    if (achievementsMenu.style.display === 'none' || achievementsMenu.style.display === '') {
+        achievementsMenu.style.display = 'block';
+        displayAchievements(); // Funktion för att fylla i achievements
+    } else {
+        achievementsMenu.style.display = 'none'; // Stäng menyn om den redan är öppen
+    }
+});
 
 
 
@@ -343,7 +334,6 @@ function step(timestamp) {
     if (timestamp >= last + tickSpeed) {
         getRandomMaterial(robotHelpers);
 
-        updateResources();
 
         tickspeedTracker.textContent = tickSpeed + 'ms'; // Uppdatera tickspeed texten
         // helperTracker.textContent = robotHelpers; // Uppdatera robothelper texten
@@ -367,7 +357,6 @@ function step(timestamp) {
         if (assemblyPlants > 0) {
             industrialGenerators += produceIndustralGenerators;
         }
-
         updateResources();
     }
 
@@ -384,6 +373,18 @@ function step(timestamp) {
     if (robotHelpers > 100 && !activeCrystal) {
         crystalTracker.classList.add('active')
         activeCrystal = true;
+    }
+
+
+    function displayAchievements() {
+        const achievementsList = document.getElementById('achievementsList');
+        achievementsList.innerHTML = ''; // Töm listan först
+    
+        achievements.forEach(achievement => {
+            const achievementItem = document.createElement('div');
+            achievementItem.textContent = `${achievement.description} - Krav: ${achievement.requiredClicks ? achievement.requiredClicks + ' Klickar' : achievement.requiredUpgrades + ' Uppgraderingar'}`;
+            achievementsList.appendChild(achievementItem);
+        });
     }
 
 
@@ -434,9 +435,16 @@ window.addEventListener('load', (event) => {
     upgrades.forEach((upgrade) => {
         upgradeList.appendChild(createCard(upgrade));
     });
+    createAchievementsMenu(achievements);
     window.requestAnimationFrame(step);
 });
 
+
+window.addEventListener('click', (event) => {
+    if (!menuButton.contains(event.target) && !achievementsMenu.contains(event.target)) {
+        achievementsMenu.style.display = 'none';
+    }
+});
 
 /* En array med upgrades. Varje upgrade är ett objekt med egenskaperna name, cost
  * och amount. Önskar du ytterligare text eller en bild så går det utmärkt att
@@ -498,6 +506,33 @@ upgrades = [
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
  */
+function createAchievementsMenu(achievements) {
+    const achievementsMenu = document.getElementById('achievementsMenu');
+    achievementsMenu.innerHTML = ''; // Rensa menyn först
+
+    achievements.forEach((achievement) => {
+        const card = document.createElement('div');
+        card.classList.add('achievement-card');
+        card.textContent = achievement.description;
+
+        // Visa krav när man hovrar
+        card.addEventListener('mouseover', () => {
+            const requirements = [];
+            if (achievement.requiredClicks) {
+                requirements.push(`Klickar: ${achievement.requiredClicks}`);
+            }
+            if (achievement.requiredUpgrades) {
+                requirements.push(`Uppgraderingar: ${achievement.requiredUpgrades}`);
+            }
+            card.title = requirements.join(', ');
+        });
+
+        achievementsMenu.appendChild(card);
+    });
+}
+
+
+
 function getWhiteSpace(count) {
     return '\xa0'.repeat(count);
 }

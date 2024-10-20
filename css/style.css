@@ -279,3 +279,41 @@ audio {
     z-index: 10;
 }
 
+
+
+
+
+
+#achievementsMenu {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.achievement-card {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.menu {
+    background-color: #fff; /* Bakgrundsfärg för menyn */
+    border: 1px solid #888; /* Kantlinje */
+    padding: 20px;
+    position: absolute; /* För att positionera den över andra element */
+    z-index: 2; /* Så den är över andra element */
+    width: 300px; /* Bredd på menyn */
+    display: none; /* Döljer menyn som standard */
+}
+
+.menu h2 {
+    margin: 0 0 10px 0; /* Marginal för rubriken */
+}
+
+.menu div {
+    margin-bottom: 5px; /* Marginal mellan achievements */
+}
