@@ -170,28 +170,45 @@ function getRandomMaterial(robotHelpers) { // Generate a random material
         */
 };
 
-function displayResources(resource) {
-    display.style.position = "absolute";
-    display.style.left = randomPosition();
-    display.style.top = randomPosition();
-    display.textContent = resource;
-}
+function displayResources() {
+    let metals = 1;
+    document.getElementById("Metals").innerText = parseInt(document.getElementById("Metals").innerText || 0) + metals;
 
-function randomPosition() {
-    var x = Math.floor(Math.random() * 100) // RANDOM NUMBER BETWEEN 0 AND 100
-    var y = x + "px";
-    console.log(y);
-    return y;
+    const notification = document.getElementById("notification");
+    notification.innerText = `+${metals} metal`;
+
+    
+    const button = document.getElementById("game-button");
+    const buttonRect = button.getBoundingClientRect();
+    const randomX = Math.random() * (buttonRect.width + 20) - 10; // Random x position
+    const randomY = Math.random() * (buttonRect.height + 20) - 10; // Random y position
+
+    notification.style.left = `${buttonRect.left + window.scrollX + randomX}px`;
+    notification.style.top = `${buttonRect.top + window.scrollY + randomY}px`;
+    notification.style.display = "block";
+
+    
+    notification.style.transform = "scale(1.2)";
+    notification.style.opacity = "1";
+
+    
+    setTimeout(() => {
+        notification.style.transform = "scale(1)";
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 300);
+    }, 15000); 
 }
 
 function bigNumberHandler(count) {
     var str = count.toString();
     var tmpCount = '';
-    if (count < 1000000) {
+    if (count < 1000) {
         tmpCount = "";
-    } else if (count >= 10000 && count <= 1000000) { 
+    } else if (count >= 1000 && count <= 1000000) { 
         str = "K";
-        tmpCount = (count / 10000).toFixed(2);
+        tmpCount = (count / 1000).toFixed(2);
     } else if (count >= 1000000 && count <= 1000000000) {
         str = "M";
         tmpCount = (count / 1000000).toFixed(2);
@@ -264,24 +281,23 @@ clickerButton.addEventListener(
     'click',
     () => {
         numberOfClicks += 1;
-        
-
-        // console.log(clicker.score);
-        //getRandomMaterial(robotHelpers); // getRandomMaterial each click
+        let resource; // Declare the resource variable
 
         let randomGet = Math.floor(Math.random() * 100) + 1; // Get a random number
         // Get a random resource based on luck on each click.
         if (randomGet <= 80) { // 80% 
             Metals += 1;
-            displayResources('Metal')
+            resource = 'Metal'
+            
         } else if (randomGet > 80 && randomGet < 99) { // 19% 
             Energy += 1;
-            displayResources('Energy')
+            resource = 'Energy'
         } else { // 1%
             Crystals += 1;
-            displayResources('Crystal')
+            resource = 'Crystal'
             // console.log(Crystals + " Crystals");
         }
+        displayResources(resource);
         updateResources(); // Uppdatera achievements
 
         // vid click öka score med moneyPerClick
@@ -297,6 +313,7 @@ clickerButton.addEventListener(
 menuButton.addEventListener('click', () => {
     if (achievementsMenu.style.display === 'none' || achievementsMenu.style.display === '') {
         achievementsMenu.style.display = 'block';
+        achievementsMenu.style.position = 'sticky';
         displayAchievements(); // Funktion för att fylla i achievements
     } else {
         achievementsMenu.style.display = 'none'; // Stäng menyn om den redan är öppen
@@ -418,6 +435,8 @@ function step(timestamp) {
 
     window.requestAnimationFrame(step);
 }
+
+
 
 
 /* Här använder vi en listener igen. Den här gången så lyssnar vi efter window
