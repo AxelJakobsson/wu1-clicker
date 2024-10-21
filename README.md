@@ -58,3 +58,12 @@ Se classroom.
 GLHF!
 
 Tack [Malte](https://github.com/Mafrans) för lite ideér.
+
+
+ {
+        title: 'Rymdkolonisering',
+        tagline: 'Klicka för att kolonisera månen och skapa fabriker',
+        url: 'LÄNK TILL GITHUB PAGES',
+        git: 'LÄNK TILL REPO',
+        author: 'Axel Jakobsson'
+    },

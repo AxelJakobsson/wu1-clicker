@@ -2,9 +2,9 @@
 /* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.333,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
 :root {
-    --color-lighter: hsl(80, 10%, 90%);
-    --color-light: hsl(80, 10%, 80%);
-    --color-dark: hsl(360, 10%, 10%);
+    --color-lighter: hsl(0, 0%, 46%);
+    --color-light: hsl(0, 0%, 24%);
+    --color-dark: hsl(0, 0%, 56%);
     --color-dark-transparent: hsla(360, 10%, 10%, 0.2);
 
     --step--1: clamp(0.94rem, calc(0.94rem + 0vw), 0.94rem);
@@ -55,9 +55,11 @@ audio {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
     gap: var(--space-s-m);
 }
-.footer > * {
+
+.footer>* {
     font-size: var(--step--1);
 }
+
 .hero {
     position: relative;
     display: grid;
@@ -69,14 +71,12 @@ audio {
     place-self: end;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        0deg,
-        var(--color-dark),
-        var(--color-dark-transparent)
-    );
+    background: linear-gradient(0deg,
+            var(--color-dark),
+            var(--color-dark-transparent));
 }
 
-.hero > picture {
+.hero>picture {
     place-self: center;
     grid-area: stack;
     width: 100%;
@@ -89,7 +89,7 @@ audio {
     background-repeat: no-repeat;
     background-size: cover;
 
-    
+
     width: 100%;
     height: 60vh;
     aspect-ratio: 16/9;
@@ -109,12 +109,13 @@ audio {
     border: none;
     font-size: 2rem;
     text-align: center;
-    transition: transform 0.1s ease; 
+    transition: transform 0.1s ease;
 
 
 
-    transition: transform 0.1s ease; /* Smooth scaling transition */
-    
+    transition: transform 0.1s ease;
+    /* Smooth scaling transition */
+
 
 
 
@@ -125,9 +126,12 @@ audio {
 }
 
 button img {
-    width: 100%; /* Makes the image take the full width of its container */
-    height: auto; /* Maintains the aspect ratio */
-    max-width: 35rem; /* Optional: Set a maximum width for larger screens */
+    width: 100%;
+    /* Makes the image take the full width of its container */
+    height: auto;
+    /* Maintains the aspect ratio */
+    max-width: 35rem;
+    /* Optional: Set a maximum width for larger screens */
 }
 
 
@@ -136,7 +140,8 @@ button img {
     .lead {
         display: none;
     }
-    .hero > picture {
+
+    .hero>picture {
         max-height: 15vh;
     }
 }
@@ -157,7 +162,7 @@ button img {
 }
 
 /* game-currency är en lista med list items */
-.item > h3 {
+.item>h3 {
     display: flex;
     justify-content: space-between;
     gap: var(--space-xs-s);
@@ -167,6 +172,7 @@ button img {
     .game-hud {
         flex-direction: column-reverse;
     }
+
     .game-controls {
         place-self: center;
     }
@@ -183,8 +189,10 @@ button img {
 }
 
 #game-button:active {
-    transform: translate(-50%, -50%) scale(0.95); /* Scale down when clicked */
-    transform-origin: center; /* Ensure scaling happens from the center */
+    transform: translate(-50%, -50%) scale(0.95);
+    /* Scale down when clicked */
+    transform-origin: center;
+    /* Ensure scaling happens from the center */
 }
 
 /* #msgbox är elementet som visar sidans toasts, popupmeddelanden
@@ -198,7 +206,7 @@ button img {
     min-width: 16rem;
 }
 
-#msgbox > p {
+#msgbox>p {
     margin-bottom: var(--space-xs-s);
     padding: var(--space-xs-s);
 }
@@ -239,6 +247,7 @@ button img {
 .card p:not(.title) {
     text-align: end;
 }
+
 /* klassen används på kortets titel, font-weight: 600 gör fonten fetare, en normal
  * font vikt är oftast 400
  */
@@ -252,9 +261,11 @@ button img {
     0% {
         color: var(--color-dark);
     }
+
     50% {
         color: var(--color-dark-transparent);
     }
+
     100% {
         color: var(--color-dark);
     }
@@ -269,15 +280,22 @@ button img {
 
 
 .menu {
+    background-color: var(--color-light);
+    border: 1px solid #888;
+    padding: 20px;
+    z-index: 99;
+
+
     display: none;
-    background-color: black;
-    width: 100vw;
     height: 90vh;
-    opacity: 60%;
+    opacity: 90%;
 
     position: fixed;
     bottom: 0;
-    
+
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 96%;
 }
 
 .show {
@@ -290,21 +308,8 @@ button img {
     z-index: 10;
 }
 
-
-
-
-
-
-#achievementsMenu {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-    width: 100%;
-    position: static;
-}
-
 .achievement-card {
-    background: #f0f0f0;
+    background: var(--color-light);
     border: 1px solid #ccc;
     margin: 5px;
     padding: 10px;
@@ -313,36 +318,38 @@ button img {
 }
 
 
-.menu {
-    background-color: #fff; /* Bakgrundsfärg för menyn */
-    border: 1px solid #888; /* Kantlinje */
-    padding: 20px;
-    position: absolute; /* För att positionera den över andra element */
-    z-index: 2; /* Så den är över andra element */
-    width: 300px; /* Bredd på menyn */
-    display: none; /* Döljer menyn som standard */
-}
-
 .menu h2 {
-    margin: 0 0 10px 0; /* Marginal för rubriken */
+    margin: 0 0 10px 0;
+    /* Marginal för rubriken */
 }
 
 .menu div {
-    margin-bottom: 5px; /* Marginal mellan achievements */
+    margin-bottom: 5px;
+    /* Marginal mellan achievements */
 }
 
 
 #msgbox {
-    position: absolute; /* or fixed if you want it to stay in the same place on scroll */
-    top: 20px; /* Adjust as needed */
-    left: 20px; /* Adjust as needed */
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-    color: white; /* Text color */
-    padding: 10px; /* Padding */
-    border-radius: 5px; /* Rounded corners */
-    display: none; /* Initially hidden */
-    z-index: 999; /* Make sure it's on top */
-    transition: opacity 0.5s; /* Smooth fade in/out */
+    position: absolute;
+    /* or fixed if you want it to stay in the same place on scroll */
+    top: 20px;
+    /* Adjust as needed */
+    left: 20px;
+    /* Adjust as needed */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Semi-transparent background */
+    color: white;
+    /* Text color */
+    padding: 10px;
+    /* Padding */
+    border-radius: 5px;
+    /* Rounded corners */
+    display: none;
+    /* Initially hidden */
+    z-index: 999;
+    /* Make sure it's on top */
+    transition: opacity 0.5s;
+    /* Smooth fade in/out */
 }
 
 
@@ -354,7 +361,9 @@ button img {
     transition: opacity 0.3s ease, transform 0.3s ease;
     opacity: 0;
     display: none;
-    font-size: 1.5; /* Adjust font size as needed */
+    font-size: 1.5;
     color: white;
+    pointer-events: none;
+    /* Make the notification not clickable */
 
 }
