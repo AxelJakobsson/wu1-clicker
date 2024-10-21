@@ -11,19 +11,19 @@ T.ex: 1 Industrial Generator, 8 Factories, 100 Robothelpers, efter ett tick =>
  Syftet med att göra det här klicker-spelet var att få en grundläggande förståelse för hur javascript fungerar. 
 
 ## Mitt mål med spelet var att ha:
-✔ Olika resurser (metall, energi, krystaller) <br>
+* ✔ Olika resurser (metall, energi, krystaller) <br>
 
-✔ Byggnader som producerar tidigare byggnaden. <br>
+* ✔ Byggnader som producerar tidigare byggnaden. <br>
 
-❌ Uppgraderingar som kostar olika mycket resurser och har olika branches att gå ut till  (dålig planering av tid, hade inte tid)<br>
+* ❌ Uppgraderingar som kostar olika mycket resurser och har olika branches att gå ut till  (dålig planering av tid, hade inte tid)<br>
 
-❌ Ett rebirth system där man kan starta om och bli starkare beroende på hur långt man hade kommit (hade inte tid).
+* ❌ Ett rebirth system där man kan starta om och bli starkare beroende på hur långt man hade kommit (hade inte tid).
 
-    Man hade försökt invadera en annan planet och man vet inte exakt hur många robot helpers man behöver, ifall man lyckas så låser man upp en ny planet med nya resurser och byggnader. Ifall man misslyckades så startar man om från början med en boost. (hade inte tid)
+    * Man hade försökt invadera en annan planet och man vet inte exakt hur många robot helpers man behöver, ifall man lyckas så låser man upp en ny planet med nya resurser och byggnader. Ifall man misslyckades så startar man om från början med en boost. (hade inte tid)
 
-❌ Ha en tickspeed uppgradering så att all produktion i spelet går snabbare (spelet laggade för mycket med tickspeed uppgradering när den blev låg nog ~500ms, så jag gjorde så att vid varje achievement man får så går tick speeden ner lite grann så att man har ett incentive för att gå för achievements.)<br>
+* ❌ Ha en tickspeed uppgradering så att all produktion i spelet går snabbare (spelet laggade för mycket med tickspeed uppgradering när den blev låg nog ~500ms, så jag gjorde så att vid varje achievement man får så går tick speeden ner lite grann så att man har ett incentive för att gå för achievements.)<br>
 
-❌ Manual purchases multiplier, varje manual purchase så multipliceras den byggnadens produktion x2 (hade inte tagit lång tid alls men jag gjorde det inte för att det kändes för obalanserat, istället så blir sin clicking power lite bättre för varje manual robot helper.)<br>
+* ❌ Manual purchases multiplier, varje manual purchase så multipliceras den byggnadens produktion x2 (hade inte tagit lång tid alls men jag gjorde det inte för att det kändes för obalanserat, istället så blir sin clicking power lite bättre för varje manual robot helper.)<br>
 
 
 
